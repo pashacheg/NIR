@@ -26,6 +26,8 @@ summary(model3)
 #p-value complaints: 0.0359    
 
 
+
+
 newmodel = lm(rating ~ complaints, attitude)
 summary(newmodel)
 #R^2 = 0.6813     
@@ -33,17 +35,38 @@ summary(newmodel)
 
 
 newmodel1 = lm(rating ~ complaints + I(raises^2), attitude)
+vif(newmodel1)
+#complaints: 1.717006    
+#I(raises^2): 1.717006 
 summary(newmodel1)
+#R^2 = 0.6602 
+
 
 newmodel2 = lm(rating ~ complaints + I(privileges^2), attitude)
+vif(newmodel2)
+#complaints: 1.410326            
+#I(privileges^2): 1.410326         
 summary(newmodel2)
+#R^2 = 0.6626 
+
 
 newmodel3 = lm(rating ~ complaints + I(privileges * raises), attitude)
-summary(newmodel3)
+vif(newmodel3)
+#complaints: 1.904371            
+#I(privileges * raises): 1.904371  
+
+
 
 newmodel4 = lm(rating ~ complaints + log(raises), attitude)
-summary(newmodel4)
+vif(newmodel4)
+#complaints: 1.893824                
+#log(raises): 1.893824     
+
 
 newmodel5 = lm(rating ~ complaints + log(privileges), attitude)
+vif(newmodel5)
+#complaints: 1.478612
+#log(privileges): 1.478612
 summary(newmodel5)
+#R^2 = 0.6579 
 
