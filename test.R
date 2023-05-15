@@ -1,11 +1,7 @@
 library("lmtest")
 
-model = lm(rating ~ raises + complaints + privileges, attitude)
-summary(model)
-#R^2 = 0.65
-#p-value raises: 0.614    
-#p-value complaints: 3.15e-05
-#p-value privileges: 0.665    
+# модель rating ~  raises + complaints + privileges
+
 
 model1 = lm(raises ~ complaints + privileges, attitude)
 summary(model1)
@@ -70,17 +66,34 @@ vif(newmodel5)
 summary(newmodel5)
 #R^2 = 0.6579 
 
+
+
 #
-#
+# значит, лучшая модель rating ~ complaints
 #
 
-stud = qt(0.75, df = 28)
-print(stud)
-# 0.68
+#
+# доверительный интервал [a, b] для коэффиуента complaints
+#
 
-# <*** доверительный интервал ***>
-#----------------------------------
-# [0.75 - 0.68 * 0.09, 0.75 + 0.68 * 0.09] =>
+coef = 0.75461
+stdError = 0.09
+
+crit_stud = qt(0.95, 28)
+
+a = coef - crit_stud * stdError # 0.6
+b = coef + crit_stud * stdError # 0.9
+
+# получили интервал [0.6, 0.9]
+
+# <* доверительный интервал для прогнозного значения *>
+#         для y = 0.75x + 14.37 в точке x = 80
+#-----------------------------------------------------------
 #
-# => [0.68, 0.81]
-#
+x = 80
+y = 0.75 * x + 14.37 # 74.37
+
+a = y - crit_stud * stdError # 74.2169
+b = y + crit_stud * stdError # 74.5231
+
+# интервал [74.22, 74.52]
